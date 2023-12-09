@@ -1,0 +1,62 @@
+<!-- templates/index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Flask App</title>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+</head>
+<style>
+    #resultContainer{
+        font-size: 32px;
+        color: green;
+</style>
+<body>
+    <h1>Hello, Flask!</h1>
+    <div>
+        <p>This button will display an alert once clicked thanks to ajax.</p>
+            <button id="runFunctionButton">Run Python Function</button>
+    </div>
+
+    <div>
+        <p>This button will display a message on the html once clicked thanks to ajax.</p>
+            <button id="runFunctionButton2">Run Python Function</button>
+    </div>
+
+    <div id="resultContainer"></div>
+
+    <script>
+        $(document).ready(function() {
+            $('#runFunctionButton').on('click', function() {
+                $.ajax({
+                    url: '/run_function',
+                    method: 'POST',
+                    success: function(response) {
+                        alert(response.result);
+                    },
+                    error: function(error) {
+                        console.error('Error:', error);
+                    }
+                });
+            });
+        });
+    </script>
+      <script>
+        $(document).ready(function() {
+            $('#runFunctionButton2').on('click', function() {
+                $.ajax({
+                    url: '/run_function',
+                    method: 'POST',
+                    success: function(response) {
+                        $('#resultContainer').html(response.result);
+                    },
+                    error: function(error) {
+                        console.error('Error:', error);
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
